@@ -23,6 +23,13 @@
         .then(data => cities.push(...data))
   console.log(cities)
 
+  const findMatches = (wordsToMatch, cities) =>{
+    return(
+      cities.filter(place => place.city.toLowerCase().includes(wordsToMatch.toLowerCase()) ||place.state.toLowerCase().includes(wordsToMatch.toLowerCase()) )
+
+    )
+  }
+
     </script>
   </body>
 </html>

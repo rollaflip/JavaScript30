@@ -23,12 +23,20 @@
         .then(data => cities.push(...data))
   console.log(cities)
 
-  const findMatches = (wordsToMatch, cities) =>{
-    return(
-      cities.filter(place => place.city.toLowerCase().includes(wordsToMatch.toLowerCase()) ||place.state.toLowerCase().includes(wordsToMatch.toLowerCase()) )
+  // const findMatches = (wordsToMatch, cities) =>{
+  //   return(
+  //     cities.filter(place => place.city.toLowerCase().includes(wordsToMatch.toLowerCase()) ||place.state.toLowerCase().includes(wordsToMatch.toLowerCase()) )
 
-    )
-  }
+  //   )
+  // }
+    const findMatches =(wordsToMatch,cities )=>{
+      const regex = new RegExp(wordsToMatch, 'gi')
+
+      return cities.filter(place => place.city.match(regex) || place.state.match(regex))
+
+    }
+
+
 
     </script>
   </body>

@@ -29,17 +29,29 @@
     const ageCheck =(person)=>  (new Date()).getFullYear() -person.year > 18
     const over18 = people.some(ageCheck)
 
-    // console.log(over18)
+    //  console.log(over18)
 
     // Array.prototype.every() // is everyone 19 or older?
-    console.log(people.every(ageCheck))
+    //  console.log(people.every(ageCheck))
+
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
 
+    // console.log(comments.find(comment=> comment.id === 823423))
+
     // Array.prototype.findIndex()
     // Find the comment with this ID
+    const commentIdCheck = comments.findIndex(comment => comment.id === 823423)
+    // console.log(commentIdCheck)
+
     // delete the comment with the ID of 823423
+    const newComments= [
+      ...comments.slice(0,commentIdCheck),
+      ...comments.slice(commentIdCheck+1)
+    ]
+    console.log(newComments)
+
 
   </script>
 </body>

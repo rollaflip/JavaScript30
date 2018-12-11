@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="UTF-8">
   <title>Hold Shift to Check Multiple Checkboxes</title>
 </head>
@@ -51,11 +51,11 @@
     }
   </style>
    <!--
-   The following is a common layout you would see in an email client.
+     The following is a common layout you would see in an email client.
 
-   When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
+     When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
 
-  -->
+    -->
   <div class="inbox">
     <div class="item">
       <input type="checkbox">
@@ -95,7 +95,50 @@
     </div>
   </div>
 
-<script>
+<script >
+
+/*
+click handler for  checking divs
+handler for shift button
+
+save state of last clicked div
+  state , is shift held
+
+  if clicked while holding shift , change all divs in between the two to be checked
+*/
+
+const state ={
+  lastChecked: null,
+  inBetween: false
+}
+let lastChecked;
+
+let itemTags = document.querySelectorAll('.item input[type = "checkbox"]')
+// let itemTags = document.querySelectorAll('.item')
+// const parent = itemTags.parentNode
+
+// console.log(itemTags)
+
+function checkHandler(e){
+  state.inBetween = false
+  if(e.shiftKey && this.checked){
+    itemTags.forEach(box =>{
+      if(box === this || box === state.lastChecked){
+        state.inBetween = !state.inBetween
+      }
+      if(state.inBetween) box.checked = true
+    })
+
+  }
+  state.lastChecked = this
+  }
+
+  itemTags.forEach(item=>{
+    item.addEventListener('click', checkHandler)
+    })
+
+
+
 </script>
 </body>
 </html>

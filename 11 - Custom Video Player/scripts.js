@@ -28,7 +28,6 @@ let lastVol = video.volume
 
 
 function handleRangeUpdate(){
-  console.log(this)
   video[this.name] =  this.value
   if(this.name === 'volume') lastVol = video.volume
 }
@@ -36,23 +35,37 @@ function handleRangeUpdate(){
 function muteVolume(){
   if(video.volume > 0) video.volume = 0
   else video.volume =lastVol
+}
 
+function handleProgress(){
+  const percent = (video.currentTime/ video.duration) *100
+  progressBar.setAttribute('style', `flex-basis: ${percent}%`)
+}
 
-  console.log(video.volume)
-  // video.
+function scrub(e){
+  const x = e.offsetX/ progress.offsetWidth
+  console.log(video.currentTime, x, video.duration)
+  video.currentTime = video.duration * x
 }
 /*  hook up event listeners*/
 
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
+video.addEventListener('timeupdate', handleProgress)
 
 toggle.addEventListener('click', togglePlay);
 
 skipButtons.forEach(button => button.addEventListener('click', skip))
 
 ranges.forEach(range => range.addEventListener('change', handleRangeUpdate))
-
 ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate))
+
+let mousedown =false
+progress.addEventListener('click', scrub)
+progress.addEventListener('mousemove', (e) => mousedown &&scrub(e))
+progress.addEventListener('mousedown', () => mousedown = true)
+progress.addEventListener('mouseup', () => mousedown = false)
+
 
 muteButton.addEventListener('click', muteVolume)
